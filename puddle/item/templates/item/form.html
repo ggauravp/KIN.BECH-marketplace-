@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <!-- Full height wrapper with flexbox to center the form -->
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-6 px-4">
+        <!-- Form Container -->
+        <div class="w-full max-w-xl bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold mb-6 text-teal-600 text-center">{{title}}</h1>
+
+            <!-- Form -->
+            <form method="post" action="." enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+
+                <div class="space-y-4">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Display Form Errors -->
+                {% if form.non_field_errors %}
+                    <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                <button type="submit" class="w-full py-3 bg-teal-500 text-white rounded-lg font-semibold shadow-lg hover:bg-teal-600 transition-all">
+                    Add Item
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <title>{% block title %}{% endblock %} | KIN.BECH</title>
+    </head>
+    <body class="bg-gray-50 text-gray-800">
+        
+       
+      
+        <!-- Sticky Navbar -->
+        <nav class="fixed top-0 w-full z-10 bg-white shadow-md py-6 px-8 flex justify-between items-center border-b border-gray-200">
+            <a href="/" class="text-2xl font-bold text-teal-600 transition-colors duration-300 hover:text-teal-700">KIN.BECH</a>
+            <div class="flex gap-6 items-center">
+                <a href="{% url 'item:new' %}" class="text-lg font-semibold text-gray-600 hover:text-teal-500 transition-transform transform hover:scale-105">New Item</a>
+                <a href="#" class="text-lg font-semibold text-gray-600 hover:text-teal-500 transition-transform transform hover:scale-105">Browse</a>
+
+                {% if request.user.is_authenticated %}
+                    <a href="#" class="px-5 py-2 text-lg font-semibold bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition-all">Inbox</a>
+                    <a href="{% url 'dashboard:index' %}" class="px-5 py-2 text-lg font-semibold bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition-all">Dashboard</a>
+                    <a href="{% url 'myapp:logout' %}" class="px-5 py-2 text-lg font-semibold bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition-all">logout</a>
+                {% else %}
+                    <a href="{% url 'myapp:signup' %}" class="px-5 py-2 text-lg font-semibold bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition-all">Sign Up</a>
+                    <a href="{% url 'myapp:login' %}" class="px-5 py-2 text-lg font-semibold bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition-all">Log In</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Main Content Area with padding to prevent overlap -->
+        <div class="pt-24 px-8 py-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        <footer class="py-6 px-6 flex justify-between bg-gray-800">
+            <div class="w-2/3 pr-10">
+                <h4 class="mb-5 font-semibold text-gray-300">About</h4>
+
+                <p class="text-lg text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    Integer nec odio. Praesent libero. 
+                    Sed cursus ante dapibus diam. Sed nisi. 
+                    Nulla quis sem at nibh elementum imperdiet. 
+                    Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. 
+                    Mauris massa. Vestibulum lacinia arcu eget nulla. 
+                </p>
+            </div>
+
+            <div class="w-1/3">
+                <h3 class="mb-5 font-semibold text-gray-300">Menu</h3>
+
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
+                    <li><a href="{% url 'myapp:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+                    <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy policy</a></li>
+                    <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Term of use</a></li>
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>

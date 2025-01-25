@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="alert mb-4 p-4 rounded-lg
+        {% if message.tags == 'success' %}
+          bg-green-500 text-white
+        {% elif message.tags == 'error' %}
+          bg-red-500 text-white
+        {% elif message.tags == 'info' %}
+          bg-blue-500 text-white
+        {% elif message.tags == 'warning' %}
+          bg-yellow-500 text-black
+        {% else %}
+          bg-gray-200 text-black
+        {% endif %}
+      ">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+    setTimeout(function() {
+      const messages = document.querySelector('.messages');
+      if (messages) {
+        messages.style.display = 'none';
+      }
+    }, 3000);  // Hide messages after 3 seconds
+  </script>
+
+    
+    <div class="mt-6 px-4 py-12 bg-gray-000 rounded-xl shadow-lg">
+        <h2 class="mb-10 text-4xl font-bold text-center text-gray-700">Newest Items</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for item in items %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div>
+                            {% if item.image %}
+                                <div class="w-full h-64">
+                                    <img src="{{ item.image.url }}" alt="Item Image" class="object-contain w-full h-full">
+                                </div>
+                            {% else %}
+                                <div class="h-64 flex items-center justify-center bg-gray-300">
+                                    <p class="text-gray-600">No image available</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold text-gray-800">{{ item.name }}</h2>
+                            <p class="text-lg text-gray-700">Price: <span class="font-semibold">${{ item.price }}</span></p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mt-10 px-4 py-12 bg-gray-100 rounded-xl shadow-lg">
+        <h2 class="mb-10 text-4xl font-bold text-center text-gray-800">Categories</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for category in categories %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+                    <a href="#">
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold text-gray-800">{{ category.name }}</h2>
+                            <p class="text-lg text-gray-700">{{ category.items.count }} items</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
